@@ -22,7 +22,8 @@ func handleNewMessage(c *gin.Context) {
 		httputil.JSONError(c, http.StatusBadRequest, err)
 		return
 	}
-	message, err = saveAndBroadcastNewMessage(message.Text, channelID, message.AuthorID)
+	message = chat.NewMessage(message.Text, channelID, message.AuthorID)
+	err = saveAndBroadcastMessage(message)
 	if err != nil {
 		httputil.JSONError(c, http.StatusInternalServerError, err)
 		return
