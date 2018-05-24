@@ -1,0 +1,11 @@
+export DIPLO_CHAT_DB_NAME=chat
+export DIPLO_CHAT_DB_USER=chat
+export DIPLO_CHAT_DB_HOST=localhost
+export DIPLO_CHAT_DB_PASSWORD=$PG_PASSWORD
+export DIPLO_CHAT_DB_PORT=5432
+
+export DIPLO_CHAT_SERVER_PORT=10430
+
+echo "Building DIPLO_CHAT_SERVER"
+go build
+./server
