@@ -28,5 +28,5 @@ func handleNewMessage(c *gin.Context) {
 		httputil.JSONError(c, http.StatusInternalServerError, err)
 		return
 	}
-	c.JSON(http.StatusOK, message)
+	httputil.SendOK(c)
 }

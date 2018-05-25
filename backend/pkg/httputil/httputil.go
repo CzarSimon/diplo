@@ -11,6 +11,11 @@ func JSONError(c *gin.Context, statusCode int, err error) {
 	c.JSON(statusCode, gin.H{"error": err.Error()})
 }
 
+// SendOK sends an ok status and message to the client.
+func SendOK(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"error": nil, "status": "OK"})
+}
+
 // RegisterHealthCheck registers a health check endpoint.
 func RegisterHealthCheck(r *gin.Engine) {
 	r.GET("/health", HandleHealthCheck)

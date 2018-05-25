@@ -36,6 +36,10 @@ func GetProvinces() map[string]Province {
 		Warsaw.ShortName:           Warsaw,
 		Ukraine.ShortName:          Ukraine,
 		Sevastopol.ShortName:       Sevastopol,
+		Paris.ShortName:            Paris,
+		Gascony.ShortName:          Gascony,
+		Munich.ShortName:           Munich,
+		Bohemia.ShortName:          Bohemia,
 	}
 }
 
@@ -345,31 +349,31 @@ var Sevastopol = Province{
 	Neighbours:      []string{"Mos", "Arm", "Bla", "Rum", "Ukr"},
 }
 
-/*
-var  = Province{
-	Name:            "",
-	ShortName:       "",
-	HasSupplyCenter: ,
-	Type:            ,
-	Neighbours:        []string{"", "", "", "", ""},
+// Paris, a French land province.
+var Paris = Province{
+	Name:            "Paris",
+	ShortName:       "Par",
+	HasSupplyCenter: true,
+	Type:            Land,
+	Neighbours:      []string{"Pic", "Bur", "Gas", "Bre"},
 }
 
-/*
-var  = Province{
-	Name:            "",
-	ShortName:       "",
-	HasSupplyCenter: ,
-	Type:            ,
-	Neighbours:        []string{"", "", "", "", ""},
+// Gascony, a French land province.
+var Gascony = Province{
+	Name:            "Gascony",
+	ShortName:       "Gas",
+	HasSupplyCenter: false,
+	Type:            Land,
+	Neighbours:      []string{"Bel", "Ruh", "Mun", "Mar", "Par", "Pic"},
 }
 
-/*
-var  = Province{
-	Name:            "",
-	ShortName:       "",
-	HasSupplyCenter: ,
-	Type:            ,
-	Neighbours:        []string{"", "", "", "", ""},
+// Bohemia, an Austrian land province.
+var Bohemia = Province{
+	Name:            "Bohemia",
+	ShortName:       "Boh",
+	HasSupplyCenter: false,
+	Type:            Land,
+	Neighbours:      []string{"Sil", "Gal", "Vie", "Boh", "Tyr", "Mun"},
 }
 
 /*
