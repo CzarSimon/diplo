@@ -6,6 +6,7 @@ import (
 
 	"github.com/CzarSimon/diplo/backend/pkg/httputil"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 // registerRoutes sets up available routes for the service.

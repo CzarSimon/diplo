@@ -17,6 +17,7 @@ type PgMessageRepo struct {
 	db *sql.DB
 }
 
+// NewPgMessageRepo creates a new postgres Message repository.
 func NewPgMessageRepo(db *sql.DB) *PgMessageRepo {
 	return &PgMessageRepo{
 		db: db,
