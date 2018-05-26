@@ -11,9 +11,10 @@ CREATE TABLE chat_user(
   id VARCHAR(64) PRIMARY KEY
 );
 
-CREATE TABLE channel_members(
+CREATE TABLE channel_member(
   user_id VARCHAR(64) REFERENCES chat_user(id),
   channel_id VARCHAR(64) REFERENCES channel(id),
+  is_subscribed BOOLEAN,
   PRIMARY KEY (user_id, channel_id)
 );
 
@@ -36,7 +37,7 @@ VALUES
   ('user-1'),
   ('user-2');
 
-INSERT INTO channel_members(user_id, channel_id)
+INSERT INTO channel_member(user_id, channel_id, is_subscribed)
 VALUES
-  ('user-1', 'channel-1'),
-  ('user-2', 'channel-1');
+  ('user-1', 'channel-1', TRUE),
+  ('user-2', 'channel-1', TRUE);

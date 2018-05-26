@@ -17,19 +17,20 @@ type Channel struct {
 }
 
 // NewChannel creates a new channel.
-func NewChannel(name, gameID string) Channel {
+func NewChannel(name, gameID string, recievers []string) Channel {
 	return Channel{
 		ID:        id.New(),
 		Name:      name,
 		CreatedAt: time.Now().UTC(),
 		GameID:    gameID,
+		Recievers: recievers,
 	}
 }
 
 // String returns a string representation of a channel.
 func (c *Channel) String() string {
-	return fmt.Sprintf("Channel: %s\nMetadata: id=%s createdAt=%v gameId=%s",
-		c.Name, c.ID, c.CreatedAt, c.GameID)
+	return fmt.Sprintf("Channel: %s\nMetadata: id=%s createdAt=%v gameId=%s recievers=%v",
+		c.Name, c.ID, c.CreatedAt, c.GameID, c.Recievers)
 }
 
 // Message content and metadata of a chat message.

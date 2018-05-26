@@ -1,0 +1,19 @@
+package main
+
+import "github.com/CzarSimon/diplo/backend/chat/pkg/chat"
+
+// saveAndRegisterChannel creates a new channel and
+// registers it for message broadcasts.
+func (env *Env) saveAndRegisterChannel(channel chat.Channel) error {
+	return env.ChannelRepo.SaveChannel(channel)
+}
+
+// addUserToChannel adds a user to a channel.
+func (env *Env) addUserToChannel(userID, channelID string) error {
+	return env.ChannelRepo.AddUser(userID, channelID)
+}
+
+// removeUserFromChannel adds a user to a channel.
+func (env *Env) removeUserFromChannel(userID, channelID string) error {
+	return env.ChannelRepo.RemoveUser(userID, channelID)
+}

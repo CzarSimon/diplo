@@ -12,7 +12,9 @@ import (
 // registerRoutes sets up available routes for the service.
 func registerRoutes(env *Env) *http.Server {
 	r := gin.Default()
+	registerChannelRoutes(r, env)
 	registerMessageRoutes(r, env)
+	registerUserRoutes(r, env)
 	httputil.RegisterHealthCheck(r)
 
 	return &http.Server{

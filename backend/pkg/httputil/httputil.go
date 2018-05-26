@@ -56,3 +56,23 @@ func RegisterHealthCheck(r *gin.Engine) {
 func HandleHealthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "UP"})
 }
+
+// ParseQueryValue parses a query value from request.
+func ParseQueryValue(c *gin.Context, key string) (string, error) {
+	value, ok := c.GetQuery(key)
+	if !ok {
+		return "", NewError(http.StatusBadRequest,
+			fmt.Sprintf("No value found for key: %s", key))
+	}
+	return value, nil
+}
+
+// ParseQueryValues parses query values from a request
+func ParseQueryValues(c *gin.Context, key string) ([]string, error) {
+	values, ok := c.GetQueryArray(key)
+	if !ok {
+		return nil, NewError(http.StatusBadRequest,
+			fmt.Sprintf("No values found for key: %s", key))
+	}
+	return values, nil
+}
