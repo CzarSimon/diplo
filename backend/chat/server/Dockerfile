@@ -6,7 +6,7 @@ COPY . .
 
 RUN go get github.com/CzarSimon/diplo/backend/pkg/httputil \
            github.com/CzarSimon/diplo/backend/pkg/id \
-           github.com/CzarSimon/diplo/backend/chat/pkg \
+           github.com/CzarSimon/diplo/backend/chat/pkg/chat \
            github.com/CzarSimon/go-endpoint \
            github.com/gin-gonic/gin \
            github.com/lib/pq
