@@ -1,2 +1,8 @@
-/backend/vendor
 /backend/chat/server/server
+/backend/chat/vendor
+
+/backend/directory/vendor
+/backend/directory/server/server
+
+/backend/game-server/vendor
+/backend/game-server/server/server

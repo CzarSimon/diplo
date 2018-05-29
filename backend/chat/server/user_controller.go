@@ -9,8 +9,7 @@ import (
 
 // Common errors related to users.
 var (
-	ErrNoSuchUser   = httputil.NewError(http.StatusNotFound, "No such user")
-	ErrUserNotFound = httputil.NewError(http.StatusBadRequest, "User not found")
+	ErrNoSuchUser = httputil.NewError(http.StatusNotFound, "No such user")
 )
 
 // registerUserRoutes registers routes that handles handles users.

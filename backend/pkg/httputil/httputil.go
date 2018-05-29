@@ -11,6 +11,7 @@ import (
 var (
 	ErrBadRequest          = NewError(http.StatusBadRequest, http.StatusText(http.StatusBadRequest))
 	ErrInternalServerError = NewError(http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
+	ErrUserNotFound        = NewError(http.StatusBadRequest, "User not found")
 )
 
 // Error http error

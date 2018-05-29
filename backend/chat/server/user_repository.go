@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+
+	"github.com/CzarSimon/diplo/backend/pkg/httputil"
 )
 
 // UserRepositoryInterface handles interactions
@@ -57,7 +59,7 @@ func (repo *PgUserRepo) FindUser(userID string) (string, error) {
 	var foundID string
 	err := repo.db.QueryRow(selectUserQuery, userID).Scan(&foundID)
 	if err == sql.ErrNoRows {
-		return "", ErrUserNotFound
+		return "", httputil.ErrUserNotFound
 	}
 	return foundID, err
 }
