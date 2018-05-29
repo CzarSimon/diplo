@@ -9,3 +9,9 @@ func (env *Env) saveUser(userID string) error {
 func (env *Env) removeUser(userID string) error {
 	return env.UserRepo.RemoveUser(userID)
 }
+
+// checkUserExists checks if a user exists
+func (env *Env) checkUserExists(userID string) error {
+	_, err := env.UserRepo.FindUser(userID)
+	return err
+}

@@ -18,6 +18,11 @@ func (env *Env) removeUserFromChannel(userID, channelID string) error {
 	return env.ChannelRepo.RemoveUser(userID, channelID)
 }
 
+// getSubscribedUsers gets the ids of all users subscribed to a channel.
+func (env *Env) getSubscribedUsers(channelID string) ([]string, error) {
+	return env.ChannelRepo.GetSubscribedUsers(channelID)
+}
+
 // getUsersGameChannels get all channels in a game that a user is subscribed to.
 func (env *Env) getUsersGameChannels(userID, gameID string) ([]chat.Channel, error) {
 	return env.ChannelRepo.GetUserChannelsPerGame(userID, gameID)
