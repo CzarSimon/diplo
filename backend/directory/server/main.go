@@ -6,11 +6,13 @@ import (
 
 	"github.com/CzarSimon/diplo/backend/pkg/httputil"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 // registerRoutes sets up available routes for the service.
 func registerRoutes(env *Env) *http.Server {
 	r := gin.Default()
+	registerUserRoutes(r, env)
 	httputil.RegisterHealthCheck(r)
 
 	return &http.Server{

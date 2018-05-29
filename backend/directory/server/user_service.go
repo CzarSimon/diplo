@@ -4,7 +4,6 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"fmt"
 	"io"
 
 	"github.com/CzarSimon/diplo/backend/directory/pkg/directory"
@@ -15,11 +14,22 @@ import (
 func (env *Env) saveUser(user directory.User) (directory.User, error) {
 	newUser := directory.NewUser(user)
 	hashedPassword, err := hashPassword(newUser, env.config.saltKey)
-	err = env.UserRepo.SaveUser(user)
 	if err != nil {
 		return user, err
 	}
-	return newUser, nil
+	newUser.Password = hashedPassword
+	err = env.UserRepo.SaveUser(newUser)
+	if err != nil {
+		return user, err
+	}
+	return sanitizeUser(newUser), nil
+}
+
+// sanitizeUser removes sensitive information from a user.
+func sanitizeUser(user directory.User) directory.User {
+	user.Password = ""
+	user.Salt = ""
+	return user
 }
 
 // hashPassword hashes a users password with an encrypted salt.
@@ -29,7 +39,6 @@ func hashPassword(user directory.User, saltKey []byte) (string, error) {
 		return "", err
 	}
 	saltedPwd := saltPassword(user.Password, salt)
-	fmt.Println(string(saltedPwd))
 
 	hash, err := bcrypt.GenerateFromPassword(saltedPwd, bcrypt.DefaultCost)
 	if err != nil {

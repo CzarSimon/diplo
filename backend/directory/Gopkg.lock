@@ -8,7 +8,7 @@
     "backend/pkg/httputil",
     "backend/pkg/id"
   ]
-  revision = "33fa1b48d38e5cf0d1618744d3d3e31391da3dd1"
+  revision = "2708156ac8bb7c80cc29d2d76f30286bcafc7485"
 
 [[projects]]
   branch = "master"
@@ -86,6 +86,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "df82dd8b5da208d8047597511fc966b113461121e7de558192f2a6f9fb9ddda9"
+  inputs-digest = "6491f1d08e1a25b8c759d41aaeccadeebb0f70d658a7c867d77eaf1361e9ef5f"
   solver-name = "gps-cdcl"
   solver-version = 1

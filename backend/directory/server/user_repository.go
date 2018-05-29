@@ -27,7 +27,7 @@ func NewPgUserRepo(db *sql.DB) *PgUserRepo {
 }
 
 const insertUserQuery = `
-  INSERT INTO app_user(id, email, username, password, salt, given_naem, surname, joined_at, ranking)
+  INSERT INTO app_user(id, email, username, password, salt, given_name, surname, joined_at, ranking)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
 
 // SaveUser save a new user in the database.
@@ -37,7 +37,9 @@ func (repo *PgUserRepo) SaveUser(user directory.User) error {
 		return err
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(user.ID)
+	_, err = stmt.Exec(
+		user.ID, user.Email, user.Username, user.Password, user.Salt,
+		user.GivenName, user.Surname, user.JoinedAt, user.Ranking)
 	return err
 }
 

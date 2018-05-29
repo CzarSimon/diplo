@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"log"
 	"os"
 
@@ -28,14 +29,18 @@ func GetConfig() Config {
 	if jwtSecret == "" {
 		log.Fatalf("%s not provided", JWT_SECRET_KEY)
 	}
+	return Config{
+		jwtSecret: []byte(jwtSecret),
+		saltKey:   getSaltKey(),
+		db:        endpoint.NewPGConfig(DB_NAME),
+		server:    endpoint.NewServerAddr(SERVER_NAME),
+	}
+}
+
+func getSaltKey() []byte {
 	saltKey := os.Getenv(SALT_KEY_KEY)
 	if saltKey == "" {
 		log.Fatalf("%s not provided", SALT_KEY_KEY)
 	}
-	return Config{
-		jwtSecret: []byte(jwtSecret),
-		saltKey:   []byte(saltKey),
-		db:        endpoint.NewPGConfig(DB_NAME),
-		server:    endpoint.NewServerAddr(SERVER_NAME),
-	}
+	return sha256.New().Sum([]byte(saltKey))[0:32]
 }

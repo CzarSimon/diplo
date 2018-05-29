@@ -12,7 +12,7 @@ import (
 
 const (
 	StartingRank = 1000.0
-	SaltLength   = 100
+	SaltLength   = 20
 )
 
 // User datatype for representing a user.
