@@ -26,13 +26,13 @@ func AuthMiddleware(opts *AuthOptions) gin.HandlerFunc {
 			return
 		}
 
-		tokenString, err := getTokenString(c)
+		tokenString, err := GetTokenString(c)
 		if err != nil {
 			JSONError(c, err)
 			return
 		}
 
-		userID, err := validateToken(tokenString, opts)
+		userID, err := ValidateToken(tokenString, opts)
 		if err != nil {
 			JSONError(c, err)
 			return
@@ -44,8 +44,8 @@ func AuthMiddleware(opts *AuthOptions) gin.HandlerFunc {
 	}
 }
 
-// validateToken checks if token is valid and returns the Subject if so.
-func validateToken(tokenString string, opts *AuthOptions) (string, error) {
+// ValidateToken checks if token is valid and returns the Subject if so.
+func ValidateToken(tokenString string, opts *AuthOptions) (string, error) {
 	token, err := jwt.ParseSigned(tokenString)
 	if err != nil {
 		return "", err
@@ -66,8 +66,8 @@ func validateToken(tokenString string, opts *AuthOptions) (string, error) {
 	return cl.Subject, nil
 }
 
-// getTokenString gets authorization token from the request context.
-func getTokenString(c *gin.Context) (string, error) {
+// GetTokenString gets authorization token from the request context.
+func GetTokenString(c *gin.Context) (string, error) {
 	authHeader := c.GetHeader("Authorization")
 	if authHeader == "" {
 		return "", ErrNoAuthHeader
