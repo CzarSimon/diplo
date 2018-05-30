@@ -49,6 +49,11 @@ func SendOK(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"error": nil, "status": "OK"})
 }
 
+// GetUserID gets userID in header set by the authentication middleware.
+func GetUserID(c *gin.Context) string {
+	return c.GetHeader(UserHeader)
+}
+
 // RegisterHealthCheck registers a health check endpoint.
 func RegisterHealthCheck(r *gin.Engine) {
 	r.GET("/health", HandleHealthCheck)
