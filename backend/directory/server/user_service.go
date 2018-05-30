@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/CzarSimon/diplo/backend/directory/pkg/directory"
+	"github.com/CzarSimon/diplo/backend/pkg/httputil"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/square/go-jose.v2/jwt"
 )
@@ -38,6 +39,21 @@ func (env *Env) loginUser(user directory.User) (directory.Token, error) {
 	return env.createJWTToken(storedUser)
 }
 
+// renewUserToken renews a user token if its expiry date + leeway has not expired.
+func (env *Env) renewUserToken(tokenString string) (directory.Token, error) {
+	userID, err := httputil.ValidateToken(tokenString, env.authOpts)
+	if err != nil {
+		return directory.EmptyToken, err
+	}
+
+	user, err := env.UserRepo.FindUser(userID)
+	if err != nil {
+		return directory.EmptyToken, err
+	}
+
+	return env.createJWTToken(user)
+}
+
 // getUserByEmail retrieves a user by email.
 func (env *Env) getUserByEmail(email string) (directory.User, error) {
 	user, err := env.UserRepo.FindUser(email)
@@ -56,6 +72,7 @@ func (env *Env) checkUserPassword(candidatePwd string, user directory.User) erro
 	return nil
 }
 
+// createJWTToken creates a new jwt token.
 func (env *Env) createJWTToken(user directory.User) (directory.Token, error) {
 	claims := jwt.Claims{
 		Subject:   user.ID,
@@ -65,7 +82,7 @@ func (env *Env) createJWTToken(user directory.User) (directory.Token, error) {
 		Expiry:    jwt.NewNumericDate(time.Now().UTC().Add(24 * time.Hour)),
 	}
 
-	tokenString, err := jwt.Signed(env.config.signer).Claims(claims).CompactSerialize()
+	tokenString, err := jwt.Signed(env.signer).Claims(claims).CompactSerialize()
 	if err != nil {
 		return directory.EmptyToken, err
 	}

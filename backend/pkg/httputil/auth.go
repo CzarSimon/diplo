@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/square/go-jose.v2/jwt"
@@ -57,9 +58,9 @@ func ValidateToken(tokenString string, opts *AuthOptions) (string, error) {
 		return "", err
 	}
 
-	err = cl.Validate(jwt.Expected{
+	err = cl.ValidateWithLeeway(jwt.Expected{
 		Issuer: opts.TokenIssuer,
-	})
+	}, opts.ValidationLeeway)
 	if err != nil {
 		return "", ErrAccessDenied
 	}
@@ -81,9 +82,10 @@ func GetTokenString(c *gin.Context) (string, error) {
 
 // AuthOptions options for checking if a client authenticated.
 type AuthOptions struct {
-	JwtSecret      []byte
-	TokenIssuer    string
-	ExemptedRoutes map[string]bool
+	JwtSecret        []byte
+	TokenIssuer      string
+	ValidationLeeway time.Duration
+	ExemptedRoutes   map[string]bool
 }
 
 // NewAuthOptions creates new authentication options
@@ -94,9 +96,10 @@ func NewAuthOptions(jwtSecret, tokenIssuer string, exemptedRoutes ...string) *Au
 	}
 
 	return &AuthOptions{
-		JwtSecret:      []byte(jwtSecret),
-		TokenIssuer:    tokenIssuer,
-		ExemptedRoutes: routesSet,
+		JwtSecret:        []byte(jwtSecret),
+		TokenIssuer:      tokenIssuer,
+		ValidationLeeway: jwt.DefaultLeeway,
+		ExemptedRoutes:   routesSet,
 	}
 }
 

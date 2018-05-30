@@ -7,7 +7,6 @@ export DIPLO_DIRECTORY_DB_PORT=5432
 export DIPLO_DIRECTORY_SERVER_PORT=1901
 
 export JWT_SECRET=secrettoken
-export SALT_KEY=saltkey
 
 echo "Building DIPLO_DIRECTORY_SERVER"
 go build
