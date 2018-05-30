@@ -39,6 +39,15 @@
   version = "v1.1.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/lib/pq"
+  packages = [
+    ".",
+    "oid"
+  ]
+  revision = "90697d60dd844d5ef6ff15135d0203f65d2f53b8"
+
+[[projects]]
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
@@ -61,7 +70,9 @@
   name = "golang.org/x/crypto"
   packages = [
     "bcrypt",
-    "blowfish"
+    "blowfish",
+    "ed25519",
+    "ed25519/internal/edwards25519"
   ]
   revision = "ab813273cd59e1333f7ae7bff5d027d4aadf528c"
 
@@ -78,6 +89,17 @@
   version = "v8.18.2"
 
 [[projects]]
+  name = "gopkg.in/square/go-jose.v2"
+  packages = [
+    ".",
+    "cipher",
+    "json",
+    "jwt"
+  ]
+  revision = "76dd09796242edb5b897103a75df2645c028c960"
+  version = "v2.1.6"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -86,6 +108,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6491f1d08e1a25b8c759d41aaeccadeebb0f70d658a7c867d77eaf1361e9ef5f"
+  inputs-digest = "2cc993ed33ca8f069ca5734eb08a1e9defccb0965ae36ebe3122c19f47d1e62d"
   solver-name = "gps-cdcl"
   solver-version = 1

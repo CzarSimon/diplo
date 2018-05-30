@@ -11,7 +11,7 @@ import (
 // with the underlying datastore for users.
 type UserRepositoryInterface interface {
 	SaveUser(user directory.User) error
-	FindUser(userID string) (directory.User, error)
+	FindUser(userIDorEmail string) (directory.User, error)
 }
 
 // PgUserRepo postgres implementation of UserRepositoryInterface.
@@ -27,8 +27,8 @@ func NewPgUserRepo(db *sql.DB) *PgUserRepo {
 }
 
 const insertUserQuery = `
-  INSERT INTO app_user(id, email, username, password, salt, given_name, surname, joined_at, ranking)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
+  INSERT INTO account(id, email, username, password, given_name, surname, joined_at, ranking)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 
 // SaveUser save a new user in the database.
 func (repo *PgUserRepo) SaveUser(user directory.User) error {
@@ -38,17 +38,21 @@ func (repo *PgUserRepo) SaveUser(user directory.User) error {
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(
-		user.ID, user.Email, user.Username, user.Password, user.Salt,
+		user.ID, user.Email, user.Username, user.Password,
 		user.GivenName, user.Surname, user.JoinedAt, user.Ranking)
 	return err
 }
 
-const selectUserQuery = "SELECT id FROM app_user WHERE id = $1"
+const selectUserQuery = `
+  SELECT id, email, username, password, given_name, surname, joined_at, ranking
+  FROM account WHERE id = $1 OR email = $1`
 
 // FindUser checks for and returns a user id if present in the database.
-func (repo *PgUserRepo) FindUser(userID string) (directory.User, error) {
+func (repo *PgUserRepo) FindUser(userIDorEmail string) (directory.User, error) {
 	var user directory.User
-	err := repo.db.QueryRow(selectUserQuery, userID).Scan(&user.ID)
+	err := repo.db.QueryRow(selectUserQuery, userIDorEmail).Scan(
+		&user.ID, &user.Email, &user.Username, &user.Password,
+		&user.GivenName, &user.Surname, &user.JoinedAt, &user.Ranking)
 	if err == sql.ErrNoRows {
 		return user, httputil.ErrUserNotFound
 	}

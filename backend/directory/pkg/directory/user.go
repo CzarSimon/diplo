@@ -15,6 +15,11 @@ const (
 	SaltLength   = 20
 )
 
+var (
+	EmptyUser  = User{}
+	EmptyToken = Token{}
+)
+
 // User datatype for representing a user.
 type User struct {
 	ID        string    `json:"id"`
@@ -52,4 +57,16 @@ func generateSalt() string {
 		log.Fatal()
 	}
 	return base64.StdEncoding.EncodeToString(bytes)
+}
+
+// Token holds JWT token data.
+type Token struct {
+	Token string `json:"token"`
+}
+
+// NewToken creates a new token.
+func NewToken(token string) Token {
+	return Token{
+		Token: token,
+	}
 }

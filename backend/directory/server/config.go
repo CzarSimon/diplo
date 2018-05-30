@@ -1,11 +1,11 @@
 package main
 
 import (
-	"crypto/sha256"
 	"log"
 	"os"
 
 	endpoint "github.com/CzarSimon/go-endpoint"
+	jose "gopkg.in/square/go-jose.v2"
 )
 
 const (
@@ -18,29 +18,31 @@ const (
 // Config holds configuration values.
 type Config struct {
 	jwtSecret []byte
-	saltKey   []byte
+	signer    jose.Signer
 	server    endpoint.ServerAddr
 	db        endpoint.SQLConfig
 }
 
 // GetConfig gets configuration values from the environment.
 func GetConfig() Config {
-	jwtSecret := os.Getenv(JWT_SECRET_KEY)
-	if jwtSecret == "" {
-		log.Fatalf("%s not provided", JWT_SECRET_KEY)
-	}
+	jwtSecret, signer := getTokenSignerAndSecret()
 	return Config{
 		jwtSecret: []byte(jwtSecret),
-		saltKey:   getSaltKey(),
+		signer:    signer,
 		db:        endpoint.NewPGConfig(DB_NAME),
 		server:    endpoint.NewServerAddr(SERVER_NAME),
 	}
 }
 
-func getSaltKey() []byte {
-	saltKey := os.Getenv(SALT_KEY_KEY)
-	if saltKey == "" {
-		log.Fatalf("%s not provided", SALT_KEY_KEY)
+func getTokenSignerAndSecret() ([]byte, jose.Signer) {
+	jwtSecret := os.Getenv(JWT_SECRET_KEY)
+	if jwtSecret == "" {
+		log.Fatalf("%s not provided", JWT_SECRET_KEY)
 	}
-	return sha256.New().Sum([]byte(saltKey))[0:32]
+	secretBytes := []byte(jwtSecret)
+	signer, err := jose.NewSigner(jose.SigningKey{Algorithm: jose.HS256, Key: secretBytes}, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return secretBytes, signer
 }
