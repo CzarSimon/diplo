@@ -92,7 +92,6 @@ func (env *Env) createJWTToken(user directory.User) (directory.Token, error) {
 // sanitizeUser removes sensitive information from a user.
 func sanitizeUser(user directory.User) directory.User {
 	user.Password = ""
-	user.Salt = ""
 	return user
 }
 

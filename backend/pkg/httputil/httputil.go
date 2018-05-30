@@ -51,7 +51,7 @@ func SendOK(c *gin.Context) {
 
 // GetUserID gets userID in header set by the authentication middleware.
 func GetUserID(c *gin.Context) string {
-	return c.GetHeader(UserHeader)
+	return c.GetString(UserHeader)
 }
 
 // RegisterHealthCheck registers a health check endpoint.

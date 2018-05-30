@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/CzarSimon/diplo/backend/chat/pkg/chat"
@@ -63,6 +64,7 @@ func (env *Env) handleChannelUserRemoval(c *gin.Context) {
 func (env *Env) handleGetChannels(c *gin.Context) {
 	userID := c.Param("userId")
 	gameID := c.Param("gameId")
+	log.Println(httputil.GetUserID(c))
 	channels, err := env.getUsersGameChannels(userID, gameID)
 	if err != nil {
 		httputil.JSONError(c, err)

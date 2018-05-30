@@ -39,7 +39,7 @@ func AuthMiddleware(opts *AuthOptions) gin.HandlerFunc {
 			return
 		}
 
-		c.Header(UserHeader, userID)
+		c.Set(UserHeader, userID)
 		log.Println(userID)
 		c.Next()
 	}
@@ -105,6 +105,7 @@ func NewAuthOptions(jwtSecret, tokenIssuer string, exemptedRoutes ...string) *Au
 
 // routeIsExempt checks if a route should be exempt from authentication checks.
 func (opts AuthOptions) routeIsExempt(r *http.Request) bool {
+	log.Printf("Route: %s\n", r.URL.String())
 	_, ok := opts.ExemptedRoutes[r.URL.String()]
 	return ok
 }

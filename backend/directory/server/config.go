@@ -11,7 +11,6 @@ const (
 	SERVER_NAME    = "DIPLO_DIRECTORY_SERVER"
 	DB_NAME        = "DIPLO_DIRECTORY_DB"
 	JWT_SECRET_KEY = "JWT_SECRET"
-	SALT_KEY_KEY   = "SALT_KEY"
 )
 
 // Config holds configuration values.

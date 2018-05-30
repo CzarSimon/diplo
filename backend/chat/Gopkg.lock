@@ -8,7 +8,7 @@
     "backend/pkg/httputil",
     "backend/pkg/id"
   ]
-  revision = "33fa1b48d38e5cf0d1618744d3d3e31391da3dd1"
+  revision = "89de0a9d808c653b31517e478988aa1856d0f503"
 
 [[projects]]
   branch = "master"
@@ -73,6 +73,15 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/crypto"
+  packages = [
+    "ed25519",
+    "ed25519/internal/edwards25519"
+  ]
+  revision = "ab813273cd59e1333f7ae7bff5d027d4aadf528c"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "c11f84a56e43e20a78cee75a7c034031ecf57d1f"
@@ -82,6 +91,17 @@
   packages = ["."]
   revision = "5f1438d3fca68893a817e4a66806cea46a9e4ebf"
   version = "v8.18.2"
+
+[[projects]]
+  name = "gopkg.in/square/go-jose.v2"
+  packages = [
+    ".",
+    "cipher",
+    "json",
+    "jwt"
+  ]
+  revision = "76dd09796242edb5b897103a75df2645c028c960"
+  version = "v2.1.6"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"

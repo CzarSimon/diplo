@@ -6,6 +6,8 @@ export DIPLO_CHAT_DB_PORT=5432
 
 export DIPLO_CHAT_SERVER_PORT=1902
 
+export JWT_SECRET=secrettoken
+
 echo "Building DIPLO_CHAT_SERVER"
 go build
 ./server
