@@ -31,7 +31,14 @@ func (env *Env) handleNewUser(c *gin.Context) {
 		httputil.JSONError(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, user)
+
+	token, err := env.loginUser(user)
+	if err != nil {
+		httputil.JSONError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, directory.NewSignupResponse(user, token))
 }
 
 // handleUserLogin handles login request for a user.

@@ -14,13 +14,13 @@ var (
 
 // registerUserRoutes registers routes that handles handles users.
 func registerUserRoutes(r *gin.Engine, env *Env) {
-	r.POST("/user/:userID", env.handleNewUser)
-	r.DELETE("/user/:userID", env.handleUserDeletion)
+	r.POST("/user", env.handleNewUser)
+	r.DELETE("/user", env.handleUserDeletion)
 }
 
 // handleNewUser handles requests to add user..
 func (env *Env) handleNewUser(c *gin.Context) {
-	userID := c.Param("userID")
+	userID := httputil.GetUserID(c)
 	err := env.saveUser(userID)
 	if err != nil {
 		httputil.JSONError(c, err)
@@ -31,7 +31,7 @@ func (env *Env) handleNewUser(c *gin.Context) {
 
 // handleUserDeletion handles requests to remove a user.
 func (env *Env) handleUserDeletion(c *gin.Context) {
-	userID := c.Param("userID")
+	userID := httputil.GetUserID(c)
 	err := env.removeUser(userID)
 	if err != nil {
 		httputil.JSONError(c, err)

@@ -8,7 +8,7 @@
     "backend/pkg/httputil",
     "backend/pkg/id"
   ]
-  revision = "89de0a9d808c653b31517e478988aa1856d0f503"
+  revision = "31e80cbd0ca272868f53d4a34ad6e7521b12bc78"
 
 [[projects]]
   branch = "master"

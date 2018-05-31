@@ -13,6 +13,7 @@ func registerMessageRoutes(r *gin.Engine, env *Env) {
 
 // handleNewMessage handles a new incomming message.
 func (env *Env) handleNewMessage(c *gin.Context) {
+	userID := httputil.GetUserID(c)
 	channelID := c.Param("channelID")
 	var message chat.Message
 	err := c.BindJSON(&message)
@@ -20,7 +21,7 @@ func (env *Env) handleNewMessage(c *gin.Context) {
 		httputil.JSONError(c, httputil.ErrBadRequest)
 		return
 	}
-	message = chat.NewMessage(message.Text, channelID, message.AuthorID)
+	message = chat.NewMessage(message.Text, channelID, userID)
 	err = env.saveAndBroadcastMessage(message)
 	if err != nil {
 		httputil.JSONError(c, err)

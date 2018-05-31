@@ -21,7 +21,7 @@ func (env *Env) saveUser(user directory.User) (directory.User, error) {
 	if err != nil {
 		return user, err
 	}
-	return sanitizeUser(newUser), nil
+	return newUser, nil
 }
 
 // loginUser checks the login credentials of a user and issues a JWT if correct.

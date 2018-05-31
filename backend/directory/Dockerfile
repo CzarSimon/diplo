@@ -10,6 +10,7 @@ RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 # Install dependencies
 RUN dep ensure
+RUN cat Gopkg.lock
 
 # Build application
 WORKDIR /go/src/directory/server

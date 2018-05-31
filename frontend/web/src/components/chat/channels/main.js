@@ -27,8 +27,8 @@ export default class ChannelList extends Component {
   }
 
   componentDidMount() {
-    const { userId, gameId } = this.props;
-    getGameChannels(userId, gameId).then(channels => {
+    const { token, gameId } = this.props;
+    getGameChannels(token, gameId).then(channels => {
       this.setState({channels})
     })
   }

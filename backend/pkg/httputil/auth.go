@@ -40,7 +40,6 @@ func AuthMiddleware(opts *AuthOptions) gin.HandlerFunc {
 		}
 
 		c.Set(UserHeader, userID)
-		log.Println(userID)
 		c.Next()
 	}
 }

@@ -52,3 +52,17 @@ func NewToken(token string) Token {
 		Token: token,
 	}
 }
+
+// SignupResponse user and token paired.
+type SignupResponse struct {
+	User  User  `json:"user"`
+	Token Token `json:"token"`
+}
+
+// NewSignupResponse combines a user and token into a SignupResponse.
+func NewSignupResponse(user User, token Token) SignupResponse {
+	return SignupResponse{
+		User:  user,
+		Token: token,
+	}
+}

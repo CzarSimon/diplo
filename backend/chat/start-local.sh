@@ -9,6 +9,6 @@ docker run -d --name $APP_NAME \
   -e DIPLO_CHAT_DB_HOST=$DB_NAME \
   -e DIPLO_CHAT_DB_PASSWORD=password \
   -e DIPLO_CHAT_DB_PORT=5432 \
-  -e DIPLO_CHAT_SERVER_PORT=1901 \
+  -e DIPLO_CHAT_SERVER_PORT=1902 \
   -e JWT_SECRET=secrettoken \
   diplo/chat:latest

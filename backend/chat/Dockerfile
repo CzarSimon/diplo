@@ -1,5 +1,5 @@
 FROM golang:1.10-alpine as build
-RUN apk update && apk upgrade && apk add git
+RUN apk update && apk upgrade && apk add git curl
 
 # Copy source
 WORKDIR /go/src/chat
@@ -10,6 +10,7 @@ RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 # Install dependencies
 RUN dep ensure
+RUN cat Gopkg.lock
 
 # Build application
 WORKDIR /go/src/chat/server
