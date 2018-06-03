@@ -15,9 +15,10 @@ const (
 
 // Config holds configuration values.
 type Config struct {
-	jwtSecret []byte
-	server    endpoint.ServerAddr
-	db        endpoint.SQLConfig
+	jwtSecret          []byte
+	server             endpoint.ServerAddr
+	db                 endpoint.SQLConfig
+	authExemptedRoutes []string
 }
 
 // GetConfig gets configuration values from the environment.
@@ -26,6 +27,12 @@ func GetConfig() Config {
 		jwtSecret: getJwtSecret(),
 		db:        endpoint.NewPGConfig(DB_NAME),
 		server:    endpoint.NewServerAddr(SERVER_NAME),
+		authExemptedRoutes: []string{
+			"/health",
+			"/user",
+			"/user/login",
+			"/user/token/renew",
+		},
 	}
 }
 

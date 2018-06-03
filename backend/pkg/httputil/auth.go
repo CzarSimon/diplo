@@ -104,7 +104,7 @@ func NewAuthOptions(jwtSecret, tokenIssuer string, exemptedRoutes ...string) *Au
 
 // routeIsExempt checks if a route should be exempt from authentication checks.
 func (opts AuthOptions) routeIsExempt(r *http.Request) bool {
-	log.Printf("Route: %s\n", r.URL.String())
-	_, ok := opts.ExemptedRoutes[r.URL.String()]
+	log.Printf("Route: %s\n", r.URL.Path)
+	_, ok := opts.ExemptedRoutes[r.URL.Path]
 	return ok
 }

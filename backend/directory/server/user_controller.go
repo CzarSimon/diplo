@@ -15,6 +15,8 @@ func registerUserRoutes(r *gin.Engine, env *Env) {
 	r.POST("/user", env.handleNewUser)
 	r.POST("/user/login", env.handleUserLogin)
 	r.GET("/user/token/renew", env.handleTokenRenewal)
+	r.GET("/me", env.handleGetUser)
+	r.GET("/users", env.handleGetUsers)
 }
 
 // handleNewUser handles requests to add new users.
@@ -32,13 +34,12 @@ func (env *Env) handleNewUser(c *gin.Context) {
 		return
 	}
 
-	token, err := env.loginUser(user)
+	token, err := env.createJWTToken(user)
 	if err != nil {
 		httputil.JSONError(c, err)
 		return
 	}
-
-	c.JSON(http.StatusOK, directory.NewSignupResponse(user, token))
+	c.JSON(http.StatusOK, directory.NewSignupResponse(sanitizeUser(user), token))
 }
 
 // handleUserLogin handles login request for a user.
@@ -72,4 +73,31 @@ func (env *Env) handleTokenRenewal(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, newToken)
+}
+
+// handleGetUsers handles requests to get user info for multiple users.
+func (env *Env) handleGetUsers(c *gin.Context) {
+	userIDs, err := httputil.ParseQueryValues(c, "userId")
+	if err != nil {
+		httputil.JSONError(c, err)
+		return
+	}
+
+	users, err := env.getUsersByID(userIDs)
+	if err != nil {
+		httputil.JSONError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
+
+// handleGetUser handles requests to get full user info.
+func (env *Env) handleGetUser(c *gin.Context) {
+	userID := httputil.GetUserID(c)
+	user, err := env.getUserByID(userID)
+	if err != nil {
+		httputil.JSONError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, sanitizeUser(user))
 }

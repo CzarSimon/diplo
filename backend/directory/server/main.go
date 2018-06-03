@@ -10,8 +10,9 @@ import (
 )
 
 // registerRoutes sets up available routes for the service.
-func registerRoutes(env *Env) *http.Server {
+func registerRoutes(env *Env, authOpts *httputil.AuthOptions) *http.Server {
 	r := gin.Default()
+	r.Use(httputil.AuthMiddleware(authOpts))
 	registerUserRoutes(r, env)
 	httputil.RegisterHealthCheck(r)
 
@@ -25,8 +26,10 @@ func main() {
 	config := GetConfig()
 	env := setupEnv(config)
 	defer env.db.Close()
+	authOpts := httputil.NewAuthOptions(
+		string(config.jwtSecret), "directory", config.authExemptedRoutes...)
 
-	server := registerRoutes(env)
+	server := registerRoutes(env, authOpts)
 	log.Printf("Starting %s on port: %s\n", SERVER_NAME, config.server.Port)
 	err := server.ListenAndServe()
 	if err != nil {

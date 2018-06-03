@@ -54,6 +54,15 @@ func (env *Env) renewUserToken(tokenString string) (directory.Token, error) {
 	return env.createJWTToken(user)
 }
 
+// getUserByID retrieves a user by id.
+func (env *Env) getUserByID(userID string) (directory.User, error) {
+	user, err := env.UserRepo.FindUser(userID)
+	if err != nil {
+		return directory.EmptyUser, err
+	}
+	return user, nil
+}
+
 // getUserByEmail retrieves a user by email.
 func (env *Env) getUserByEmail(email string) (directory.User, error) {
 	user, err := env.UserRepo.FindUser(email)
@@ -61,6 +70,15 @@ func (env *Env) getUserByEmail(email string) (directory.User, error) {
 		return directory.EmptyUser, err
 	}
 	return user, nil
+}
+
+// getUserByID retrieves a user by id.
+func (env *Env) getUsersByID(userIDs []string) ([]directory.User, error) {
+	users, err := env.UserRepo.FindUsers(userIDs)
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
 }
 
 // checkUserPassword retrieves user from database and verifies the provided password.
