@@ -4,11 +4,12 @@ import config
 import directory
 
 
-def main():
+def main(print_env):
     env = {}
     directory.directory_tests(env)
-    print(json.dumps(env, sort_keys=True, indent=4))
+    if print_env:
+        print(json.dumps(env, sort_keys=True, indent=4))
 
 
 if __name__ == '__main__':
-    main()
+    main(False)
