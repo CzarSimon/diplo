@@ -6,3 +6,5 @@
 
 /backend/game-server/vendor
 /backend/game-server/server/server
+
+/backend/integration-test/__pycache__
