@@ -54,7 +54,7 @@ def test_get_me(env):
 def test_get_users(env):
     ids = [user['user']['id'] for user in env['directory']['users'].values()]
     get_users_route = '{}?{}'.format(
-        config.GET_USERS_ROUTE, '&'.join([f'userId={id}' for id in ids]))
+        config.GET_USERS_ROUTE, util.create_query('userId', ids))
     token = env['directory']['users']['user-1']['token']
     users = util.get_request(get_users_route, util.make_headers(token))
     found_ids = set([user['id'] for user in users])

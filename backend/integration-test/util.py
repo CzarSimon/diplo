@@ -44,6 +44,31 @@ def post_request(URL, headers, body=None):
     return resp.json()
 
 
+def put_request(URL, headers, body=None):
+    """Makes a put request, checks and returns the response.
+
+    :param URL: url to make the request to.
+    :param headers: Header dict to include in the request.
+    :param body: Body to include in the request.
+    :return: Deserialized JSON body of the response.
+    """
+    resp = requests.put(URL, headers=headers, data=json.dumps(body))
+    check_response(resp)
+    return resp.json()
+
+
+def delete_request(URL, headers):
+    """Makes a delete request, checks and returns the response.
+
+    :param URL: url to make the request to.
+    :param headers: Header dict to include in the request.
+    :return: Deserialized JSON body of the response.
+    """
+    resp = requests.delete(URL, headers=headers)
+    check_response(resp)
+    return resp.json()
+
+
 def check_response(response):
     """Checks that a response was successfull, raises an exceptions if not.
 
@@ -71,3 +96,7 @@ def clear_table(conn, table_name):
     except Exception as e:
         print(str(e))
         conn.rollback()
+
+
+def create_query(key, values):
+    return '&'.join([f'{key}={value}' for value in values])
