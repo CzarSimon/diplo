@@ -1,36 +1,74 @@
 import React, { Component } from 'react';
-import ChannelList from './components/chat/channels/main';
-import SignupForm from './components/login/signup';
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+
+import { DEV_MODE } from './config/main';
+import * as reducers from './ducks';
+
+import LoginContainer from './components/login/containers';
 import './App.css';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: '',
-      gameId: 'game-1',
-      gameName: 'Congress In Vienna'
-    }
-  }
+// Redux setup
+const createStoreWithMiddleware = (!DEV_MODE)
+  ? applyMiddleware(thunk)(createStore)
+  : applyMiddleware(thunk, logger)(createStore)
+const reducer = combineReducers({
+  ...reducers,
+  routing: routerReducer
+})
+const store = createStoreWithMiddleware(reducer);
+const history = syncHistoryWithStore(browserHistory, store);
 
-  loggedIn = () => this.state.token !== '';
-
-  setToken = token => {
-    this.setState({ token })
-  }
-
+class Home extends Component {
   render() {
-    const { token, gameId, gameName } = this.state;
     return (
-      <div className="App">
-        {
-          (this.loggedIn()) ?
-          (<ChannelList gameName={gameName} gameId={gameId} token={token} />) :
-          (<div><SignupForm setToken={this.setToken}/></div>)
-        }
-      </div>
-    );
+      <p>Home</p>
+    )
   }
 }
 
-export default App;
+class Map extends Component {
+  render() {
+    return (
+      <p>Map</p>
+    )
+  }
+}
+
+class Chat extends Component {
+  render() {
+    return (
+      <p>Chat</p>
+    )
+  }
+}
+
+class Signup extends Component {
+  render() {
+    return (
+      <p>Signup</p>
+    )
+  }
+}
+
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <div className="App">
+        <Router history={history}>
+          <Route path="/" component={Home} />
+          <Route path="/game/map" component={Map} />
+          <Route path="/game/chat" component={Chat} />
+          <Route path="/login" component={LoginContainer} />
+          <Route path="/signup" component={Signup} />
+        </Router>
+        </div>
+      </Provider>
+    );
+  }
+}
