@@ -19,6 +19,7 @@ def chat_tests(env):
     env['chat']['channels'][channel['id']] = channel
     subscribe_user_to_channel(channel, users[-1])
     send_messages(channel, users[0], users[-1])
+    test_get_channels(channel, env['chat']['game'], users[0]['token'])
     log.info('Chat: OK')
 
 
@@ -63,6 +64,15 @@ def send_messages(channel, user_1, user_2):
         token = user_1['token'] if use_first_user else user_2['token']
         util.post_request(URL, util.make_headers(token), _make_chat_msg(msg))
         use_first_user = not use_first_user
+
+
+def test_get_channels(channel, game_id, token):
+    URL = config.GET_CHANNEL_ROUTE.format(game_id)
+    recieved_channels = util.get_request(URL, util.make_headers(token))
+    if len(recieved_channels) != 1:
+        raise ValueError('Wrong number of channels: {}'.format(len(recieved_channels)))
+    if recieved_channels[0]['id'] != channel['id']:
+        raise ValueError('Wrong channel returned: {}'.format(channel['id']))
 
 
 def _make_chat_msg(text):
