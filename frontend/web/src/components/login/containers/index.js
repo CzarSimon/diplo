@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../../ducks/user';
 import Login from '../components';
 
-
 class LoginContainer extends Component {
   handleLoginSubmit = (email, password) => {
     this.props.actions.loginUser(email, password);

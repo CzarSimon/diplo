@@ -5,7 +5,7 @@ const SET_ACTIVE_GAME = 'diplo/games/SET';
 const ADD_GAME = 'diplo/games/ADD';
 
 const initalState = {
-  activeId: null,
+  activeId: 'game-1',
   all: {}
 }
 

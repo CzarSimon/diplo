@@ -10,6 +10,9 @@ import { DEV_MODE } from './config/main';
 import * as reducers from './ducks';
 
 import LoginContainer from './components/login/containers';
+import SignupContainer from './components/signup/containers';
+import ChatContainer from './components/chat/containers';
+import TabMenuContainer from './components/tabmenu/containers';
 import './App.css';
 
 // Redux setup
@@ -26,7 +29,9 @@ const history = syncHistoryWithStore(browserHistory, store);
 class Home extends Component {
   render() {
     return (
-      <p>Home</p>
+      <div>
+        <p>Home</p>
+      </div>
     )
   }
 }
@@ -39,34 +44,19 @@ class Map extends Component {
   }
 }
 
-class Chat extends Component {
-  render() {
-    return (
-      <p>Chat</p>
-    )
-  }
-}
-
-class Signup extends Component {
-  render() {
-    return (
-      <p>Signup</p>
-    )
-  }
-}
-
 export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <div className="App">
-        <Router history={history}>
-          <Route path="/" component={Home} />
-          <Route path="/game/map" component={Map} />
-          <Route path="/game/chat" component={Chat} />
-          <Route path="/login" component={LoginContainer} />
-          <Route path="/signup" component={Signup} />
-        </Router>
+          <Router history={history}>
+            <Route path="/" component={Home} />
+            <Route path="/game/map" component={Map} />
+            <Route path="/game/chat" component={ChatContainer} />
+            <Route path="/login" component={LoginContainer} />
+            <Route path="/signup" component={SignupContainer} />
+          </Router>
+          <TabMenuContainer />
         </div>
       </Provider>
     );

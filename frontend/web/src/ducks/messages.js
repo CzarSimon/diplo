@@ -1,7 +1,8 @@
 import { createAction } from 'redux-actions';
+import { concat } from 'lodash';
 
 /* --- Action types --- */
-//const APPEND_MESSAGE = 'diplo/messages/APPEND';
+const APPEND_MESSAGE = 'diplo/messages/APPEND';
 const ADD_MESSAGES = 'diplo/messages/ADD';
 
 const initalState = {}
@@ -10,13 +11,16 @@ const initalState = {}
 const messages = (state = initalState, action = {}) => {
   switch (action.type) {
     case ADD_MESSAGES:
-      const { gameId, channelId, messages } = action.payload;
+      const { channelId, messages } = action.payload;
       return {
         ...state,
-        [gameId]: {
-          ...state[gameId],
-          [channelId]: messages
-        }
+        [channelId]: messages
+      }
+    case APPEND_MESSAGE:
+      const { message } = action.payload;
+      return {
+        ...state,
+        [message.channelId]: concat(state[message.channelId], message)
       }
     default:
       return state;
@@ -27,8 +31,11 @@ const messages = (state = initalState, action = {}) => {
 export default messages;
 
 /* --- Actions --- */
-export const addMessages = createAction(ADD_MESSAGES,
-  (gameId, channelId, messages) => ({ gameId, channelId, messages }));
+export const addMessages = createAction(
+  ADD_MESSAGES, (channelId, messages) => ({ channelId, messages }));
+
+export const appendMessage = createAction(
+  APPEND_MESSAGE, messages => ({ messages }));
 
 export const sendMessage = (text, channel, token) => {
   console.log(`text: ${text}`);

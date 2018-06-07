@@ -3,6 +3,9 @@ import { Card, Input, Icon, Button } from 'antd';
 import { length } from '../../../style';
 
 const style = {
+  form: {
+    margin: length.medium,
+  },
   input: {
     marginBottom: length.small
   },
@@ -37,13 +40,13 @@ export default class Login extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <Card>
+      <Card style={style.form}>
         <h2>Diplomacy</h2>
         <Input
           placeholder='email'
           type='email'
           value={email}
-          prefix={<Icon type="user" style={style.formIcon} />}
+          prefix={<Icon type="mail" style={style.formIcon} />}
           onChange={this.onEmailChange}
           style={style.input} />
         <Input
