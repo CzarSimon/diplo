@@ -3,6 +3,8 @@ package httputil
 import (
 	"fmt"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -82,4 +84,18 @@ func ParseQueryValues(c *gin.Context, key string) ([]string, error) {
 			fmt.Sprintf("No values found for key: %s", key))
 	}
 	return values, nil
+}
+
+// ParseTimestampQuery parses a unix timestamp.
+func ParseTimestampQuery(c *gin.Context, key string) (time.Time, error) {
+	value, err := ParseQueryValue(c, key)
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	timestamp, err := strconv.ParseInt(value, 10, 64)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return time.Unix(timestamp, 0), nil
 }

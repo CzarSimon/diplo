@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/CzarSimon/diplo/backend/chat/pkg/chat"
 )
 
@@ -35,4 +37,9 @@ func sendMessageToChannels(msg chat.Message, msgChannels []chan chat.Message) {
 	for _, msgChan := range msgChannels {
 		msgChan <- msg
 	}
+}
+
+// getMessagesSince gets messages for a channel since a given date.
+func (env *Env) getMessagesSince(channelID string, since time.Time) ([]chat.Message, error) {
+	return env.MessageRepo.GetMessagesSince(channelID, since)
 }
