@@ -20,6 +20,7 @@ def chat_tests(env):
     subscribe_user_to_channel(channel, users[-1])
     send_messages(channel, users[0], users[-1])
     test_get_channels(channel, env['chat']['game'], users[0]['token'])
+    test_get_messages(channel, users[0]['token'])
     log.info('Chat: OK')
 
 
@@ -73,6 +74,20 @@ def test_get_channels(channel, game_id, token):
         raise ValueError('Wrong number of channels: {}'.format(len(recieved_channels)))
     if recieved_channels[0]['id'] != channel['id']:
         raise ValueError('Wrong channel returned: {}'.format(channel['id']))
+
+
+def test_get_messages(channel, token):
+    URL = config.MESSAGE_ROUTE.format(channel['id'])
+    messages = util.get_request(URL, util.make_headers(token))
+    if len(messages) != len(config.MELIAN_DIALOGE):
+        raise ValueError('Wrong number of messages recieved: {}'.format(len(messages)))
+    for i in range(len(messages)):
+        expected = config.MELIAN_DIALOGE[i]
+        actual = messages[i]
+        log.debug('Message Id: {}'.format(actual['id']))
+        log.debug(actual['text'])
+        if actual['text'] != expected:
+            raise ValueError('Wrong message text for message: {}'.format(actual['id']))
 
 
 def _make_chat_msg(text):
