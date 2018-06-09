@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setActiveChannel, loadChannels } from '../../../ducks/channels';
+import { closeChatMenu } from '../../../ducks/menu';
 import ChannelList from '../components/channelList';
 
 class ChannelListContainer extends Component {
   handleChannelSelect = channel => {
     const { actions, state } = this.props;
     actions.setActiveChannel(state.gameId, channel);
+    actions.closeChatMenu();
   }
 
   render() {
@@ -30,7 +32,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToActions = dispatch => ({
-  actions: bindActionCreators({ setActiveChannel, loadChannels }, dispatch)
+  actions: bindActionCreators({
+    setActiveChannel,
+    closeChatMenu,
+    loadChannels
+  }, dispatch)
 });
 
 export default connect(

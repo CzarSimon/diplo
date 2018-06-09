@@ -1,4 +1,9 @@
 export const color = {
+  primary: '#93C178',
+  accent: '#465C8B',
+  secondary: '#F7EF6A',
+  background: '#DFDCE3',
+  border: 'rgba(10,10,10,.25)',
   green: '#00BD76',
   red: '#EF472F',
   yellow: '#FFBD55',

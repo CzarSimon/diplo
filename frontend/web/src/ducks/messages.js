@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import { concat } from 'lodash';
+import * as chat from '../api/chat';
 
 /* --- Action types --- */
 const APPEND_MESSAGE = 'diplo/messages/APPEND';
@@ -37,6 +38,20 @@ export const addMessages = createAction(
 export const appendMessage = createAction(
   APPEND_MESSAGE, messages => ({ messages }));
 
-export const sendMessage = (text, channel, token) => {
-  console.log(`text: ${text}`);
-}
+export const loadMessages = (token, channelId) => (
+  dispatch => (
+    chat.loadChannelMessages(token, channelId)
+      .then(messages => {
+        dispatch(addMessages(channelId, messages));
+      })
+  )
+)
+
+export const sendMessage = (text, channelId, token) => (
+  dispatch => (
+    chat.sendMessage(token, channelId, { text })
+      .then(res => {
+        console.log('Message sent');
+      })
+  )
+)

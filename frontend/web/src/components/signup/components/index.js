@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Input, Icon, Button } from 'antd';
-import { length } from '../../../style'
+import { length, color } from '../../../style'
 
 const style = {
   form: {
@@ -10,7 +10,7 @@ const style = {
     marginBottom: length.small
   },
   formIcon: {
-    color: 'rgba(0,0,0,.25)'
+    color: color.border
   },
   button: {
     marginBottom: length.small,

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
+import { color } from '../../../style'
 
 const style = {
   container: {
+    borderTopStyle: 'solid',
+    borderColor: color.border,
+    borderWidth: '1px',
     bottom: 0,
     position: 'fixed',
     width: '100%',

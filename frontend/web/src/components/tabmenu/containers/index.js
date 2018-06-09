@@ -6,6 +6,13 @@ import { selectTab } from '../../../ducks/menu';
 import TabMenu from '../components';
 
 class TabMenuContainer extends Component {
+  componentDidMount() {
+    const { selectedTab, path } = this.props.state
+    if (!selectedTab) {
+      this.props.actions.selectTab(path);
+    }
+  }
+
   selectTab = tabName => {
     if (tabName === '/game/orders') {
       console.log('Toggle display orders');
