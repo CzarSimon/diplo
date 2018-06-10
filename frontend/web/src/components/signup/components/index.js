@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { Card, Input, Icon, Button } from 'antd';
+import SignupErrorContainer from '../containers/signupError';
 import { length, color } from '../../../style'
+import { formButtonStyle } from '../../../style/buttons';
 
 const style = {
   form: {
-    padding: length.small,
+    margin: length.medium,
   },
   input: {
-    marginBottom: length.small
+    marginBottom: length.medium
   },
   formIcon: {
     color: color.border
   },
-  button: {
-    marginBottom: length.small,
-    width: '100%'
+  loginText: {
+    textAlign: 'left',
+    margin: '0',
+    marginTop: length.small
   }
 }
 
@@ -26,7 +29,13 @@ export default class Signup extends Component {
 
   onSubmit = event => {
     const { email, username, password, givenName, surname } = this.state;
-    this.props.handleSignupSubmit({ email, username, password, givenName, surname });
+    this.props.handleSignupSubmit({
+      email,
+      username,
+      password,
+      givenName,
+      surname
+    });
   }
 
   onChange = key => event => {
@@ -39,11 +48,17 @@ export default class Signup extends Component {
   onGivenNameChange = this.onChange('givenName');
   onSurnameChange = this.onChange('surname');
 
+  onClickLogin = event => {
+    this.props.handleClickLogin();
+    return false;
+  }
+
   render() {
     const { email, username, password, givenName, surname } = this.state;
     return (
       <Card style={style.form}>
         <h2>Diplomacy</h2>
+        <SignupErrorContainer />
         <Input
           placeholder='email'
           type='email'
@@ -76,9 +91,12 @@ export default class Signup extends Component {
           prefix={<Icon type="user" style={style.formIcon} />}
           onChange={this.onSurnameChange}
           style={style.input} />
-        <Button type="primary" htmlType="submit" onClick={this.onSubmit} style={style.button}>
+        <Button type="primary" htmlType="submit" onClick={this.onSubmit} style={formButtonStyle}>
           Sign up
         </Button>
+        <p style={style.loginText}>
+          Already have an account? <a onClick={this.onClickLogin}>Login here</a>
+        </p>
       </Card>
     )
   }

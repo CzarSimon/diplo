@@ -17,15 +17,13 @@
     "redux-actions": "^2.4.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "validator": "^10.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "theme": {
-    "primary-color": "#93C178"
   }
 }

@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { Card, Input, Icon, Button } from 'antd';
+import LoginErrorContainer from '../containers/loginError';
 import { length } from '../../../style';
+import { formButtonStyle } from '../../../style/buttons';
 
 const style = {
   form: {
     margin: length.medium,
   },
   input: {
-    marginBottom: length.small
+    marginBottom: length.medium
   },
   formIcon: {
     color: 'rgba(0,0,0,.25)'
   },
-  button: {
-    marginBottom: length.small,
-    width: '100%'
+  signupText: {
+    textAlign: 'left',
+    margin: '0',
+    marginTop: length.small
   }
 }
 
@@ -37,11 +40,17 @@ export default class Login extends Component {
 
   onPasswordChange = this.onChange('password');
 
+  onClickSignup = event => {
+    this.props.handleClickSignup();
+    return false;
+  }
+
   render() {
     const { email, password } = this.state;
     return (
       <Card style={style.form}>
         <h2>Diplomacy</h2>
+        <LoginErrorContainer />
         <Input
           placeholder='email'
           type='email'
@@ -57,9 +66,12 @@ export default class Login extends Component {
           onChange={this.onPasswordChange}
           style={style.input}
           onSubmit={this.onSubmit} />
-        <Button type="primary" htmlType="submit" onClick={this.onSubmit} style={style.button}>
+        <Button type="primary" htmlType="submit" onClick={this.onSubmit} style={formButtonStyle}>
           Log in
         </Button>
+        <p style={style.signupText}>
+          Or <a onClick={this.onClickSignup}>signup now!</a>
+        </p>
       </Card>
     )
   }

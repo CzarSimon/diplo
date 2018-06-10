@@ -5,14 +5,21 @@ import * as directory from '../api/directory';
 /* --- Action types --- */
 const ADD_TOKEN = 'diplo/user/token/ADD';
 const ADD_USER = 'diplo/user/ADD';
+const LOGOUT_USER = 'diplo/user/LOGOUT';
 const SET_LOGIN_ERROR = 'diplo/user/login/ERROR';
 const SET_SIGNUP_ERROR = 'diplo/user/signup/ERROR';
 
 const initalState = {
   token: null,
   info: null,
-  loginError: false,
-  signupError: false
+  loginError: {
+    isError: false,
+    message: ''
+  },
+  signupError: {
+    isError: false,
+    message: ''
+  }
 }
 
 /* --- Reducer --- */
@@ -22,8 +29,8 @@ const user = (state = initalState, action = {}) => {
       return {
         ...state,
         token: action.payload.token,
-        loginError: false,
-        signupError: false
+        loginError: { isError: false, message: null },
+        signupError: { isError: false, message: null }
       }
     case ADD_USER:
       return {
@@ -35,14 +42,26 @@ const user = (state = initalState, action = {}) => {
         ...state,
         token: null,
         info: null,
-        loginError: true
+        loginError: {
+          isError: true,
+          message: action.payload.error
+        }
       }
     case SET_SIGNUP_ERROR:
       return {
         ...state,
         token: null,
         info: null,
-        signupError: true
+        signupError: {
+          isError: true,
+          message: action.payload.error
+        }
+      }
+    case LOGOUT_USER:
+      return {
+        ...state,
+        token: null,
+        info: null
       }
     default:
       return state;
@@ -56,9 +75,9 @@ export const addToken = createAction(ADD_TOKEN, token => ({ token }));
 
 export const addUser = createAction(ADD_USER, user => ({ user }));
 
-export const setLoginError = createAction(SET_LOGIN_ERROR);
+export const setLoginError = createAction(SET_LOGIN_ERROR, error => ({ error }));
 
-export const setSignupError = createAction(SET_SIGNUP_ERROR);
+export const setSignupError = createAction(SET_SIGNUP_ERROR, error => ({ error }));
 
 export const loginUser = (email, password) => (
   dispatch => (
@@ -72,7 +91,7 @@ export const loginUser = (email, password) => (
         })
     })
     .catch(err => {
-      dispatch(setLoginError());
+      dispatch(setLoginError('Email and password did not match'));
     })
   )
 )
@@ -86,7 +105,7 @@ export const signupUser = user => (
       browserHistory.replace('/');
     })
     .catch(err => {
-      dispatch(setSignupError());
+      dispatch(setSignupError(''));
     })
   )
 )
@@ -99,3 +118,5 @@ export const getUser = token => (
     })
   )
 )
+
+export const logoutUser = createAction(LOGOUT_USER);
