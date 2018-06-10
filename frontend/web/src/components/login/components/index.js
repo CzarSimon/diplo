@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Input, Icon, Button } from 'antd';
 import LoginErrorContainer from '../containers/loginError';
+import FullLogoWithTagline from '../../common/logo/fullWithTagline';
 import { length } from '../../../style';
 import { formButtonStyle } from '../../../style/buttons';
 
@@ -49,7 +50,7 @@ export default class Login extends Component {
     const { email, password } = this.state;
     return (
       <Card style={style.form}>
-        <h2>Diplomacy</h2>
+        <FullLogoWithTagline />
         <LoginErrorContainer />
         <Input
           placeholder='email'

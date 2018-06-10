@@ -8,3 +8,5 @@
 /backend/game-server/server/server
 
 /backend/integration-test/__pycache__
+
+.DS_Store

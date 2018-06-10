@@ -8,7 +8,7 @@ const style = {
     backgroundColor: color.white
   },
   icon: {
-    color: color.accent
+    color: color.primary
   }
 }
 
