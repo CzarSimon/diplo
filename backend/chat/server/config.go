@@ -29,6 +29,7 @@ func GetConfig() Config {
 		server:    endpoint.NewServerAddr(SERVER_NAME),
 		authExemptedRoutes: []string{
 			"/health",
+			"/connect",
 		},
 	}
 }

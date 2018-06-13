@@ -8,7 +8,7 @@ import ChannelList from '../components/channelList';
 class ChannelListContainer extends Component {
   handleChannelSelect = channel => {
     const { actions, state } = this.props;
-    actions.setActiveChannel(state.gameId, channel);
+    actions.setActiveChannel(state.game.id, channel);
     actions.closeChatMenu();
   }
 
@@ -26,7 +26,7 @@ class ChannelListContainer extends Component {
 
 const mapStateToProps = state => ({
   state: {
-    gameId: state.games.activeId,
+    game: state.games.all[state.games.activeId],
     channels: state.channels[state.games.activeId]
   }
 });

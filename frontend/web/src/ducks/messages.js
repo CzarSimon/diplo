@@ -5,8 +5,12 @@ import * as chat from '../api/chat';
 /* --- Action types --- */
 const APPEND_MESSAGE = 'diplo/messages/APPEND';
 const ADD_MESSAGES = 'diplo/messages/ADD';
+const CONNECT_SOCKET = 'diplo/messages/socket/CONNECT';
+const DISCONNECT_SOCKET = 'diplo/messages/socket/DISCONNECT';
 
-const initalState = {}
+const initalState = {
+  socketConnected: false
+}
 
 /* --- Reducer --- */
 const messages = (state = initalState, action = {}) => {
@@ -22,6 +26,16 @@ const messages = (state = initalState, action = {}) => {
       return {
         ...state,
         [message.channelId]: concat(state[message.channelId], message)
+      }
+    case CONNECT_SOCKET:
+      return {
+        ...state,
+        socketConnected: true
+      }
+    case DISCONNECT_SOCKET:
+      return {
+        ...state,
+        socketConnected: false
       }
     default:
       return state;
@@ -55,3 +69,7 @@ export const sendMessage = (text, channelId, token) => (
       })
   )
 )
+
+export const registerSocketConnection = createAction(CONNECT_SOCKET);
+
+export const unregisterSocketConnection = createAction(DISCONNECT_SOCKET);

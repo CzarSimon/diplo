@@ -6,7 +6,12 @@ const ADD_GAME = 'diplo/games/ADD';
 
 const initalState = {
   activeId: 'game-1',
-  all: {}
+  all: {
+    'game-1': {
+      id: 'game-1',
+      name: 'The Congress in Vienna'
+    }
+  }
 }
 
 /* --- Reducer --- */

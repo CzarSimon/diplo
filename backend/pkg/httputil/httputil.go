@@ -2,6 +2,7 @@ package httputil
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -38,6 +39,7 @@ func (err Error) Error() string {
 
 // JSONError sends an error response back to a client.
 func JSONError(c *gin.Context, err error) {
+	log.Println(err)
 	switch httpErr := err.(type) {
 	case Error:
 		c.JSON(httpErr.StatusCode, gin.H{"error": httpErr.Message})

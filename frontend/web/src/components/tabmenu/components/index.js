@@ -27,7 +27,7 @@ export default class TabMenu extends Component {
     return (
       <div style={style.container}>
         <Menu onClick={this.handleClick} selectedKeys={[selectedTab]} mode="horizontal" style={style.menu}>
-          <Menu.Item key="/"><Icon type="mail" />Home</Menu.Item>
+          <Menu.Item key="/"><Icon type="home" />Home</Menu.Item>
           <Menu.Item key="/game/map"><Icon type="global" />Map</Menu.Item>
           <Menu.Item key="/game/chat"><Icon type="message" />Chat</Menu.Item>
           <Menu.Item key="/game/orders"><Icon type="bars" />Orders</Menu.Item>

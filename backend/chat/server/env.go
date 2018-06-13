@@ -14,6 +14,7 @@ type Env struct {
 	ChannelRepo ChannelRepositoryInterface
 	MessageRepo MessageRepositoryInterface
 	UserRepo    UserRepositoryInterface
+	AuthOpts    *httputil.AuthOptions
 	Channels    *UserChannels
 	config      Config
 }
@@ -28,6 +29,7 @@ func setupEnv(config Config) *Env {
 		ChannelRepo: NewPgChannelRepo(db),
 		MessageRepo: NewPgMessageRepo(db),
 		UserRepo:    NewPgUserRepo(db),
+		AuthOpts:    httputil.NewAuthOptions(config.jwtSecret, "directory", config.authExemptedRoutes...),
 		Channels:    NewUserChannels(),
 		config:      config,
 	}

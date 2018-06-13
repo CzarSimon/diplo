@@ -6,13 +6,15 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import { DEV_MODE } from './config/main';
+import { DEV_MODE } from './config';
 import * as reducers from './ducks';
 
 import LoginContainer from './components/login/containers';
 import SignupContainer from './components/signup/containers';
 import ChatContainer from './components/chat/containers';
+import ChatSocketHandler from './components/chat/containers/socketHandler';
 import TabMenuContainer from './components/tabmenu/containers';
+import HomeContainer from './components/home/containers';
 import './App.css';
 
 // Redux setup
@@ -25,16 +27,6 @@ const reducer = combineReducers({
 })
 const store = createStoreWithMiddleware(reducer);
 const history = syncHistoryWithStore(browserHistory, store);
-
-class Home extends Component {
-  render() {
-    return (
-      <div>
-        <p>Home</p>
-      </div>
-    )
-  }
-}
 
 class Map extends Component {
   render() {
@@ -49,8 +41,9 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
+          <ChatSocketHandler />
           <Router history={history}>
-            <Route path="/" component={Home} />
+            <Route path="/" component={HomeContainer} />
             <Route path="/game/map" component={Map} />
             <Route path="/game/chat" component={ChatContainer} />
             <Route path="/login" component={LoginContainer} />

@@ -12,9 +12,8 @@ import (
 func main() {
 	config := GetConfig()
 	env := setupEnv(config)
-	authOpts := setupAuthOptions(config)
 
-	server := registerRoutes(env, authOpts)
+	server := registerRoutes(env)
 	log.Printf("Starting %s on port: %s\n", SERVER_NAME, config.server.Port)
 	err := server.ListenAndServe()
 	if err != nil {
@@ -23,21 +22,17 @@ func main() {
 }
 
 // registerRoutes sets up available routes for the service.
-func registerRoutes(env *Env, authOpts *httputil.AuthOptions) *http.Server {
+func registerRoutes(env *Env) *http.Server {
 	r := gin.Default()
-	r.Use(httputil.AuthMiddleware(authOpts))
+	r.Use(httputil.AuthMiddleware(env.AuthOpts))
 	registerChannelRoutes(r, env)
 	registerMessageRoutes(r, env)
 	registerUserRoutes(r, env)
+	registerSocketRoutes(r, env)
 	httputil.RegisterHealthCheck(r)
 
 	return &http.Server{
 		Addr:    ":" + env.config.server.Port,
 		Handler: r,
 	}
-}
-
-// setupAuthOptions sets up authentication options for the service.
-func setupAuthOptions(config Config) *httputil.AuthOptions {
-	return httputil.NewAuthOptions(config.jwtSecret, "directory", config.authExemptedRoutes...)
 }

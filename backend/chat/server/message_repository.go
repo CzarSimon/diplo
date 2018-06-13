@@ -41,7 +41,7 @@ func (repo *PgMessageRepo) SaveMessage(msg chat.Message) error {
 }
 
 const getMessagesSinceQuery = `
-  SELECT id, message_text, channel_id, author, created_at FROM message WHERE channel_id = $1 AND created_at >= $2`
+  SELECT id, message_text, channel_id, author, created_at FROM message WHERE channel_id = $1 AND created_at >= $2 ORDER BY created_at`
 
 // GetMessagesSince get messages in a channel since a certain date.
 func (repo *PgMessageRepo) GetMessagesSince(channelID string, since time.Time) ([]chat.Message, error) {
