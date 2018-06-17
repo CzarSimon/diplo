@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { logoutUser } from '../../../ducks/user';
+import { logoutAndClearUser } from '../../../ducks/user';
 import { isValidToken } from '../../../utils';
 import Home from '../components';
 
 class HomeContainer extends Component {
   handleLogout = () => {
-    this.props.actions.logoutUser();
+    this.props.actions.logoutAndClearUser();
   }
 
   handleSelectPath = path => () => {
@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToActions = dispatch => ({
-  actions: bindActionCreators({ logoutUser }, dispatch)
+  actions: bindActionCreators({ logoutAndClearUser }, dispatch)
 });
 
 export default connect(

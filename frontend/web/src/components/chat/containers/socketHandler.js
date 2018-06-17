@@ -16,16 +16,18 @@ class ChatSocketHandler extends Component {
   }
 
   connectSocket = () => {
-    const { token } = this.props.state;
-    console.log(`${WEBSOCKET_URL}?token=${token}`);
-    this.socket = new WebSocket(`${WEBSOCKET_URL}?token=${token}`);
+    if (this.socket) {
+      return;
+    }
+    this.socket = new WebSocket(`${WEBSOCKET_URL}?token=${this.props.state.token}`);
     this.props.actions.registerSocketConnection();
     this.socket.onmessage = this.handleIncommingMessage;
     this.socket.onclose = this.handleSocketClose;
   }
 
   handleIncommingMessage = event => {
-    console.log(`Recieved message: ${event.data}`);
+    const message = JSON.parse(event.data);
+    this.props.actions.appendMessage(message);
   }
 
   handleSocketClose = event => {
@@ -35,11 +37,13 @@ class ChatSocketHandler extends Component {
     }
   }
 
-  render() {
-    console.log(`Socket connected: ${this.props.state.socketConnected}`);
+  componentWillUpdate() {
     if (this.shouldConnectSocket()) {
       this.connectSocket();
     }
+  }
+
+  render() {
     return (
       <div />
     )

@@ -50,24 +50,17 @@ export const addMessages = createAction(
   ADD_MESSAGES, (channelId, messages) => ({ channelId, messages }));
 
 export const appendMessage = createAction(
-  APPEND_MESSAGE, messages => ({ messages }));
+  APPEND_MESSAGE, message => ({ message }));
 
-export const loadMessages = (token, channelId) => (
-  dispatch => (
-    chat.loadChannelMessages(token, channelId)
-      .then(messages => {
-        dispatch(addMessages(channelId, messages));
-      })
-  )
+export const loadMessages = (token, channelId) => dispatch => (
+  chat.loadChannelMessages(token, channelId)
+    .then(messages => {
+      dispatch(addMessages(channelId, messages));
+    })
 )
 
 export const sendMessage = (text, channelId, token) => (
-  dispatch => (
-    chat.sendMessage(token, channelId, { text })
-      .then(res => {
-        console.log('Message sent');
-      })
-  )
+  dispatch => chat.sendMessage(token, channelId, { text })
 )
 
 export const registerSocketConnection = createAction(CONNECT_SOCKET);

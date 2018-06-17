@@ -7,7 +7,7 @@ import { formButtonStyle } from '../../../style/buttons';
 
 const style = {
   form: {
-    margin: length.medium,
+    margin: length.medium
   },
   input: {
     marginBottom: length.medium

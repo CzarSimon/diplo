@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Message from './message';
+import ScrollToBottom from '../../common/scrollToBottom';
 import { length } from '../../../style';
 
 const style = {
@@ -14,6 +15,7 @@ export default class MessageList extends Component {
     return (
       <div>
         {messages.map((message, i) => (<Message key={i} {...message} />))}
+        <ScrollToBottom />
       </div>
     )
   }
