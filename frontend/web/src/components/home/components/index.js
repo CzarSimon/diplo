@@ -3,6 +3,8 @@ import { Divider } from 'antd';
 import FullLogo from '../../common/logo/full';
 import LoggedInMenu from './loggedInMenu';
 import LoggedOutMenu from './loggedOutMenu';
+import GeneralMenu from './generalMenu';
+import LogoutOption from './logoutOption';
 import { length } from '../../../style';
 
 const style = {
@@ -20,9 +22,12 @@ const style = {
 
 export default class Home extends Component {
   render() {
-    const { isLoggedIn, handleLogout, games, goToLogin, goToSignup } = this.props;
+    const {
+      isLoggedIn, handleLogout, goToLogin, goToSignup,
+      goToMyGames, goToProfile, goToAbout, goToGames
+    } = this.props;
     const userComponent = (isLoggedIn)
-      ? <LoggedInMenu handleLogout={handleLogout} games={games} />
+      ? <LoggedInMenu goToMyGames={goToMyGames} goToProfile={goToProfile} />
       : <LoggedOutMenu goToLogin={goToLogin} goToSignup={goToSignup} />
     return (
       <div style={style.container}>
@@ -31,6 +36,8 @@ export default class Home extends Component {
         </div>
         <Divider />
         {userComponent}
+        <GeneralMenu goToAbout={goToAbout} goToGames={goToGames} />
+        <LogoutOption isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       </div>
     )
   }

@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
-import { Divider, Collapse } from 'antd';
-import _ from 'lodash';
+import { Divider } from 'antd';
 import { length } from '../../../style';
 
 const style = {
-  container: {}
+  menuOption: {
+    paddingBottom: length.medium
+  }
 }
 
 export default class LoggedInMenu extends Component {
-  onClickLogout = event => {
-    this.props.handleLogout();
+
+  onClickGames = event => {
+    this.props.goToMyGames();
+    return false;
+  }
+
+  onClickProfile = event => {
+    this.props.goToProfile();
     return false;
   }
 
   render() {
-    const { games } = this.props;
     return (
-      <div style={style.container}>
-        <Collapse>
-          <Collapse.Panel header='Active Games' key='1'>
-            {_.values(games.all).map((game, i) => <p key={game.id}>{game.name}</p>)}
-          </Collapse.Panel>
-        </Collapse>
+      <div>
+        <h3 style={style.menuOption}><a onClick={this.onClickGames}>My Games</a></h3>
+        <h3><a onClick={this.onClickProfile}>Profile</a></h3>
         <Divider />
-        <p><a onClick={this.onClickLogout}>Logout</a></p>
       </div>
     )
   }

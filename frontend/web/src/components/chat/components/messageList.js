@@ -4,8 +4,8 @@ import ScrollToBottom from '../../common/scrollToBottom';
 import { length } from '../../../style';
 
 const style = {
-  container: {
-    marginTop: length.navbar
+  listPadding: {
+    height: length.navbar
   }
 }
 
@@ -14,6 +14,7 @@ export default class MessageList extends Component {
     const { messages } = this.props;
     return (
       <div>
+        <div style={style.listPadding}/>
         {messages.map((message, i) => (<Message key={i} {...message} />))}
         <ScrollToBottom />
       </div>

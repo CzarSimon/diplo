@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { Divider } from 'antd';
 import { length } from '../../../style';
 
 const style = {
-  container: {}
+  menuOption: {
+    paddingBottom: length.medium
+  }
 }
 
 export default class LoggedOutMenu extends Component {
@@ -18,9 +21,10 @@ export default class LoggedOutMenu extends Component {
 
   render() {
     return (
-      <div style={style.container}>
-        <p><a onClick={this.onClickLogin}>Login</a></p>
-        <p><a onClick={this.onClickSignup}>Signup</a></p>
+      <div>
+        <h3 style={style.menuOption}><a onClick={this.onClickLogin}>Login</a></h3>
+        <h3><a onClick={this.onClickSignup}>Sign up</a></h3>
+        <Divider />
       </div>
     )
   }

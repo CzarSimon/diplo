@@ -15,6 +15,7 @@ import ChatContainer from './components/chat/containers';
 import ChatSocketHandler from './components/chat/containers/socketHandler';
 import TabMenuContainer from './components/tabmenu/containers';
 import HomeContainer from './components/home/containers';
+import About from './components/about/components';
 import './App.css';
 
 // Redux setup
@@ -48,6 +49,7 @@ export default class App extends Component {
             <Route path="/game/chat" component={ChatContainer} />
             <Route path="/login" component={LoginContainer} />
             <Route path="/signup" component={SignupContainer} />
+            <Route path="/about" component={About} />
           </Router>
           <TabMenuContainer />
         </div>

@@ -17,6 +17,10 @@ class HomeContainer extends Component {
 
   goToLogin = this.handleSelectPath('/login');
   goToSignup = this.handleSelectPath('/signup');
+  goToMyGames = this.handleSelectPath('/my/games');
+  goToProfile = this.handleSelectPath('/my/profile');
+  goToAbout = this.handleSelectPath('/about');
+  goToGames = this.handleSelectPath('/games');
 
   render() {
     return (
@@ -25,6 +29,10 @@ class HomeContainer extends Component {
         goToLogin={this.goToLogin}
         goToSignup={this.goToSignup}
         handleLogout={this.handleLogout}
+        goToMyGames={this.goToMyGames}
+        goToProfile={this.goToProfile}
+        goToAbout={this.goToAbout}
+        goToGames={this.goToGames}
         isLoggedIn={isValidToken(this.props.state.token)} />
     )
   }
