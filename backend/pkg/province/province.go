@@ -23,3 +23,8 @@ type Province struct {
 	Type            Type        `json:"type"`
 	Neighbours      []ShortName `json:"neighbours"`
 }
+
+// HasParent checks if the province has a parent.
+func (p *Province) HasParent() bool {
+	return p.Parent != ""
+}
