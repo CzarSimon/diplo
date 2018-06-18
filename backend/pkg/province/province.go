@@ -2,19 +2,24 @@ package province
 
 // Types of provinces
 const (
-	Land   Type = "LAND"
-	Costal      = "COSTAL"
-	Water       = "WATER"
+	Land   Type = "Land"
+	Costal      = "Costal"
+	Water       = "Water"
 )
 
 // Type name of a prvince type.
 type Type string
 
+// Name province short name.
+type ShortName string
+
 // Province represents a teritory on the diplomacy map.
 type Province struct {
-	Name            string   `json:"name"`
-	ShortName       string   `json:"shortName"`
-	HasSupplyCenter bool     `json:"hasSupplyCenter"`
-	Type            Type     `json:"type"`
-	Neighbours      []string `json:"neighbours"`
+	Name            string      `json:"name"`
+	ShortName       ShortName   `json:"shortName"`
+	Parent          ShortName   `json:"parent"`
+	ChildProvinces  []ShortName `json:"childProvinces"`
+	HasSupplyCenter bool        `json:"hasSupplyCenter"`
+	Type            Type        `json:"type"`
+	Neighbours      []ShortName `json:"neighbours"`
 }
